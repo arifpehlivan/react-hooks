@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const container = document.getElementById('app');
 const root = createRoot(container);
@@ -24,6 +24,32 @@ const root = createRoot(container);
 const App = (props) => {
   const [count, setCount] = useState(props.count);
   const [text, setText] = useState("");
+
+  // text
+  useEffect(() => {
+    console.log("text");
+  },[text])
+
+  // count
+  useEffect(() => {
+    console.log("count");
+    localStorage.setItem("count", count);
+  },[count])
+
+  // componentdidmount
+  useEffect(() =>{
+    console.log("componentdidmount");
+    const countData = localStorage.getItem("count");
+    if(countData){
+      setCount(countData)
+    }
+  },[])
+
+  // componentdidmount(), componentdidupdate()
+  useEffect(() => {
+    console.log("componentdidmount - componentdidupdate");
+  })
+
   return (
     <div>
       <p>Clicked {count}</p>
